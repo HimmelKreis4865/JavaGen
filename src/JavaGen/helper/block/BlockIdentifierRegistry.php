@@ -22,7 +22,7 @@ final class BlockIdentifierRegistry {
 
 	/**
 	 * @var Closure[] $defaultBlocks
-	 * @phpstan-var array<string, Closure(array): Block> $defaultBlocks
+	 * @phpstan-var array<string, Closure(array<string, scalar>): Block> $defaultBlocks
 	 */
 	private array $defaultBlocks = [];
 
@@ -50,13 +50,10 @@ final class BlockIdentifierRegistry {
 		$this->registerMapping("minecraft:mangrove_propagule", BlockTypeNames::AIR, fn() => VanillaBlocks::AIR());
 		$this->registerMapping("minecraft:suspicious_sand", BlockTypeNames::SAND, fn() => VanillaBlocks::SAND());
 		$this->registerMapping("minecraft:suspicious_gravel", BlockTypeNames::GRAVEL, fn() => VanillaBlocks::GRAVEL());
-		$this->registerMapping("minecraft:chest", BlockTypeNames::CHEST, function (array $states): Chest {
-			return VanillaBlocks::CHEST(); // todo
-		});
 	}
 
 	/**
-	 * @phpstan-param Closure(array): Block|null $stateMapper
+	 * @phpstan-param Closure(array<string, scalar>): Block|null $stateMapper
 	 */
 	public function registerMapping(string $missingIdentifier, string $realIdentifier, ?Closure $stateMapper = null, bool $overwrite = false): bool {
 		if ((isset($this->mappings[$missingIdentifier]) or isset($this->defaultBlocks[$missingIdentifier])) and !$overwrite) return false;
@@ -73,6 +70,10 @@ final class BlockIdentifierRegistry {
 		return $this->mappings[$identifier] ?? $identifier;
 	}
 
+	/**
+	 * @param scalar[] $states
+	 * @phpstan-param array<string, scalar> $states
+	 */
 	public function getBlock(string $identifier, array $states): ?Block {
 		if (!isset($this->defaultBlocks[$identifier])) return null;
 		return ($this->defaultBlocks[$identifier])($states);

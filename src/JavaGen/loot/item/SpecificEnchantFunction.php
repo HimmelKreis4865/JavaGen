@@ -13,7 +13,7 @@ use function strtoupper;
 
 class SpecificEnchantFunction extends LootItemFunction {
 
-	public function __construct(private readonly array $enchants) {
+	public function __construct(private array $enchants) {
 	}
 
 	public function applyOn(LootItem $item, Random $random): void {
@@ -23,13 +23,17 @@ class SpecificEnchantFunction extends LootItemFunction {
 
 			$enchantment = $enchants[strtoupper($enchantData["id"])];
 			$num = new RandomNumber($z = $enchantData["level"][0], $enchantData["level"][1] ?? $z);
-			$instance = new EnchantmentInstance($enchantment, min($num->getNumber(), $enchantment->getMaxLevel()));
+			$instance = new EnchantmentInstance($enchantment, min((int) $num->getNumber(), $enchantment->getMaxLevel()));
 
 			$item->item->addEnchantment($instance);
 		}
 	}
 
-	public static function fromJson(array $data): static {
+
+	/**
+	 * @phpstan-param array<mixed> $data
+	 */
+	public static function fromJson(array $data): SpecificEnchantFunction {
 		return new SpecificEnchantFunction($data["enchants"]);
 	}
 }

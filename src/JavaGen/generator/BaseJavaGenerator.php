@@ -44,14 +44,12 @@ abstract class BaseJavaGenerator extends Generator {
 	}
 
 	public function generateChunk(ChunkManager $world, int $chunkX, int $chunkZ): void {
-		$time = microtime(true) * 1000;
 		$chunk = $world->getChunk($chunkX, $chunkZ);
+		if ($chunk === null) {
+			return;
+		}
 
-		/**
-		 * @var BinaryStream $stream
-		 * @var BlockPalette $palette
-		 */
-		JavaRequests::requestChunk($this->getDimension(), $chunkX, $chunkZ, $stream);
+		$stream = JavaRequests::requestChunk($this->getDimension(), $chunkX, $chunkZ);
 
 		$minIndex = (static::MIN_Y >> 4);
 		$maxIndex = ((static::MAX_Y - 1) >> 4);
@@ -91,11 +89,15 @@ abstract class BaseJavaGenerator extends Generator {
 		}
 	}
 
+	/**
+	 * @param array $data
+	 * @phpstan-param array<string, scalar|array> $data
+	 */
 	public function mergeWorkerData(array $data): void {
 		$worker = Thread::getCurrentThread();
 		if ($worker instanceof AsyncWorker) {
 			$existing = $worker->getFromThreadStore(self::WORKER_DATA);
-			if ($existing !== null) {
+			if (is_string($existing)) {
 				$existing = json_decode($existing, true);
 				$existing[] = $data;
 				$data = $existing;
@@ -108,7 +110,7 @@ abstract class BaseJavaGenerator extends Generator {
 			}
 			$worker->saveToThreadStore(self::WORKER_DATA, $encodedData);
 		} else {
-			throw new RuntimeException("Did not expect to be in a " . $worker::class . " instead of " . AsyncWorker::class);
+			throw new RuntimeException("Did not expect to be in a thread of type " . ($worker === null ? "NULL" : $worker::class) . " instead of " . AsyncWorker::class);
 		}
 	}
 

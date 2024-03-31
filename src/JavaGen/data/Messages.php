@@ -14,6 +14,10 @@ final class Messages {
 
 	private Config $messageKeys;
 
+	/**
+	 * @var string[] $messageKeyCache
+	 * @phpstan-var array<string, string> $messageKeyCache
+	 */
 	private array $messageKeyCache = [];
 
 	public function __construct() {

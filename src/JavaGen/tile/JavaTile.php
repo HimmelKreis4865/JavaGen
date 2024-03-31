@@ -16,6 +16,9 @@ class JavaTile {
 
 	private string $id;
 
+	/**
+	 * @phpstan-param array<mixed> $data
+	 */
 	public function __construct(array $data) {
 		if (!isset($data["id"]) or !isset($data["x"]) or !isset($data["y"]) or !isset($data["z"])) {
 			throw new InvalidArgumentException("Tile does not contain important information");

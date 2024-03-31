@@ -17,8 +17,10 @@ use pocketmine\nbt\tag\IntTag;
 use pocketmine\nbt\tag\StringTag;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\world\format\io\GlobalBlockStateHandlers;
+use RuntimeException;
 use function array_map;
 use function file_get_contents;
+use function is_array;
 use function is_bool;
 use function is_float;
 use function is_int;
@@ -30,10 +32,13 @@ final class JavaToBedrockBlockData {
 	public static string $mappingsFile;
 
 	/** @var Block[] $mappings */
-	private readonly array $mappings;
+	private array $mappings;
 
 	public function __construct() {
-		$this->mappings = array_map(function(array $json): Block {
+		$this->mappings = array_map(function(mixed $json): Block {
+			if (!is_array($json)) {
+				throw new RuntimeException("Failed to decode java mappings data");
+			}
 			$identifier = BlockIdentifierRegistry::getInstance()->map($json["bedrock_identifier"]);
 			$states = $this->jsonToNbt($json["bedrock_states"] ?? []);
 
@@ -55,6 +60,10 @@ final class JavaToBedrockBlockData {
 		return $this->mappings[$identifier] ?? throw new InvalidArgumentException("Block \"" . $identifier . "\" is not registered in the mappings");
 	}
 
+	/**
+	 * @param scalar[] $json
+	 * @phpstan-param array<string, scalar> $json
+	 */
 	private function jsonToNbt(array $json): array {
 		$tags = [];
 		foreach($json as $name => $value) {

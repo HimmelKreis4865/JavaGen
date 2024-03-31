@@ -14,6 +14,9 @@ enum StructureCategory {
 
 	case VILLAGE;
 
+	/**
+	 * @return StructureType[]
+	 */
 	public function getChildren(): array {
 		return match($this) {
 			self::RUINED_PORTAL => [

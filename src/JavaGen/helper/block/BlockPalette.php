@@ -10,8 +10,10 @@ final class BlockPalette {
 
 	private int $stateAir;
 
+	/** @var string[] $rawBlockData */
 	private array $rawBlockData;
 
+	/** @var int[] $map */
 	public array $map = [];
 
 	public function __construct(array $rawMap) {
@@ -23,6 +25,9 @@ final class BlockPalette {
 		return $this->map[$index] ?? $this->stateAir;
 	}
 
+	/**
+	 * @param string[] $map
+	 */
 	private function parseMap(array $map): void {
 		foreach ($map as $i => $blockData) {
 			$block = JavaToBedrockBlockData::getInstance()->javaToBedrockBlock($blockData);

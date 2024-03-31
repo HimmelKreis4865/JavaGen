@@ -9,7 +9,7 @@ use function mt_rand;
 
 class RandomNumber extends Number {
 
-	public function __construct(private readonly int|float $min, private readonly int|float $max) {}
+	public function __construct(private int|float $min, private int|float $max) {}
 
 	public function getNumber(): int|float {
 		if (is_float($this->min) || is_float($this->max)) {

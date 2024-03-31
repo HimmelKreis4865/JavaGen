@@ -24,7 +24,7 @@ final class JavaTileMappings {
 
 	/**
 	 * @var Closure[] $mappings
-	 * @phpstan-var array<string, Closure(JavaTile, World): void> $mappings
+	 * @phpstan-var array<string, Closure(JavaTile, World, Chunk): void> $mappings
 	 */
 	private array $mappings = [];
 
@@ -66,7 +66,7 @@ final class JavaTileMappings {
 	}
 
 	/**
-	 * @phpstan-param Closure(JavaTile, World): void $closure
+	 * @phpstan-param Closure(JavaTile, World, Chunk): void $closure
 	 */
 	public function registerMapping(string $tileId, Closure $closure, bool $overwrite = false): bool {
 		if (isset($this->mappings[$tileId]) and !$overwrite) return false;
@@ -75,7 +75,7 @@ final class JavaTileMappings {
 	}
 
 	/**
-	 * @phpstan-return Closure(JavaTile, World): void|null
+	 * @phpstan-return (Closure(JavaTile, World, Chunk): void)|null
 	 */
 	public function findMapping(string $tileId): ?Closure {
 		return $this->mappings[$tileId] ?? null;

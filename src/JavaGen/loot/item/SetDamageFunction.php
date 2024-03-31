@@ -10,7 +10,7 @@ use pocketmine\utils\Random;
 
 class SetDamageFunction extends LootItemFunction {
 
-	public function __construct(private readonly Number $damage) {
+	public function __construct(private Number $damage) {
 	}
 
 	public function applyOn(LootItem $item, Random $random): void {
@@ -24,7 +24,11 @@ class SetDamageFunction extends LootItemFunction {
 		}
 	}
 
-	public static function fromJson(array $data): static {
+
+	/**
+	 * @phpstan-param array<mixed> $data
+	 */
+	public static function fromJson(array $data): SetDamageFunction {
 		return new SetDamageFunction(Number::fromJson($data["damage"]));
 	}
 }

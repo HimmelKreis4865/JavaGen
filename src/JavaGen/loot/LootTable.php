@@ -31,15 +31,16 @@ class LootTable {
 		return $items;
 	}
 
+	/**
+	 * @return Item[]
+	 */
 	public function placeItemsInChestGrid(Random $random): array {
 		$unsortedItems = $this->generateItems($random);
 		foreach ($unsortedItems as $item) {
 			if ($item->getCount() > 5) {
 				$j = 3 + $random->nextBoundedInt($item->getCount() - 5);
 				for ($i = 0; $i < $j; $i++) {
-					if ($item->getCount() > 2) {
-						$unsortedItems[] = $item->pop();
-					}
+					$unsortedItems[] = $item->pop();
 				}
 			}
 		}

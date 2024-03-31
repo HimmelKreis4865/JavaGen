@@ -17,11 +17,7 @@ use function mt_rand;
 
 class EnchantItemFunction extends LootItemFunction {
 
-	/**
-	 * @param bool $treasure todo: find out what this does
-	 */
-	public function __construct(private readonly ?Number $levels = null, private readonly bool $treasure = false) {
-	}
+	public function __construct(private ?Number $levels = null) {}
 
 	public function applyOn(LootItem $item, Random $random): void {
 		$item = $item->item;
@@ -44,9 +40,12 @@ class EnchantItemFunction extends LootItemFunction {
 		}
 	}
 
-	public static function fromJson(array $data): static {
+	/**
+	 * @phpstan-param array<mixed> $data
+	 */
+	public static function fromJson(array $data): EnchantItemFunction {
 		if (isset($data["levels"])) {
-			return new EnchantItemFunction(Number::fromJson($data["levels"]), $data["treasure"]);
+			return new EnchantItemFunction(Number::fromJson($data["levels"]));
 		}
 		return new EnchantItemFunction();
 	}

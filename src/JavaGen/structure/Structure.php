@@ -13,9 +13,9 @@ use function preg_match;
 
 class Structure {
 
-	private const PATTERN_BOUNDING_BOX = "/\{minX=([0-9\-]+), minY=([0-9\-]+), minZ=([0-9\-]+), maxX=([0-9\-]+), maxY=([0-9\-]+), maxZ=([0-9\-]+)\}/";
+	private const PATTERN_BOUNDING_BOX = "/{minX=([0-9\-]+), minY=([0-9\-]+), minZ=([0-9\-]+), maxX=([0-9\-]+), maxY=([0-9\-]+), maxZ=([0-9\-]+)}/";
 
-	public function __construct(private readonly StructureType $type, private readonly AxisAlignedBB $boundingBox) {
+	public function __construct(private StructureType $type, private AxisAlignedBB $boundingBox) {
 	}
 
 	public function getType(): StructureType {

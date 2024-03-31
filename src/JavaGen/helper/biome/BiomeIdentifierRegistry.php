@@ -97,6 +97,9 @@ final class BiomeIdentifierRegistry {
 		return true;
 	}
 
+	/**
+	 * @return string[]
+	 */
 	public function getBiomeNames(): array {
 		return array_keys($this->mappings);
 	}

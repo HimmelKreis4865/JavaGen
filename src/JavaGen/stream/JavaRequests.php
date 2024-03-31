@@ -11,22 +11,29 @@ use pocketmine\utils\BinaryStream;
 use pocketmine\utils\Internet;
 use pocketmine\world\Position;
 use RuntimeException;
+use function is_array;
 use function json_decode;
 
 final class JavaRequests {
 
-	public static function requestChunk(Dimension $dimension, int $chunkX, int $chunkZ, &$stream): void {
+	public static function requestChunk(Dimension $dimension, int $chunkX, int $chunkZ): BinaryStream {
 		$fullResponse = self::request("http://localhost:8000/chunkRequest?chunkX=$chunkX&chunkZ=$chunkZ&dimension=" . $dimension->value);
-		$stream = new BinaryStream($fullResponse);
+		return new BinaryStream($fullResponse);
 	}
 
 	public static function findNearestBiome(Position $position, string $biomeName): ?Vector3 {
 		$dimension = GeneratorNames::toDimension($position->getWorld());
+		if ($dimension === null) {
+			return null;
+		}
 		return self::findNearestObject("biome", $dimension, $position, $biomeName);
 	}
 
 	public static function findNearestStructure(Position $position, string $structureName): ?Vector3 {
 		$dimension = GeneratorNames::toDimension($position->getWorld());
+		if ($dimension === null) {
+			return null;
+		}
 		return self::findNearestObject("structure", $dimension, $position, $structureName);
 	}
 
@@ -35,10 +42,10 @@ final class JavaRequests {
 		$fullResponse = self::request("http://localhost:8000/locate?category=$type&type=$objectName&x=" . $position->x . "&y=" . $position->y . "&z=" . $position->z . "&dimension=" . $dimension->value);
 
 		$json = json_decode($fullResponse, true);
-		if ($json === null or !isset($json["x"]) or !isset($json["y"]) or !isset($json["z"])) {
+		if (!is_array($json) or !isset($json["x"]) or !isset($json["y"]) or !isset($json["z"])) {
 			return null;
 		}
-		return new Vector3($json["x"], $json["y"], $json["z"]);
+		return new Vector3((int) $json["x"], (int) $json["y"], (int) $json["z"]);
 	}
 
 	private static function request(string $url): string {

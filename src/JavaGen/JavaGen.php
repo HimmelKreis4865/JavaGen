@@ -8,11 +8,9 @@ use JavaGen\commands\LocateCommand;
 use JavaGen\generator\EndGenerator;
 use JavaGen\generator\NetherGenerator;
 use JavaGen\generator\OverworldGenerator;
-use JavaGen\helper\Dimension;
 use JavaGen\helper\GeneratorNames;
-use JavaGen\stream\JavaRequests;
+use JavaGen\tasks\CheckConnectionTask;
 use pocketmine\plugin\PluginBase;
-use pocketmine\scheduler\AsyncTask;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\world\generator\GeneratorManager;
 
@@ -35,13 +33,7 @@ final class JavaGen extends PluginBase {
 	}
 
 	protected function testConnection(): void {
-		$task = new class extends AsyncTask {
-
-			public function onRun(): void {
-				JavaRequests::requestChunk(Dimension::OVERWORLD, 0, 0, $stream);
-			}
-		};
-		$this->getServer()->getAsyncPool()->submitTask($task);
+		$this->getServer()->getAsyncPool()->submitTask(new CheckConnectionTask());
 	}
 
 	private function validateConfig(): void {

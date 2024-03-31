@@ -16,7 +16,7 @@ class LootPool {
 
 	private ?int $cachedFullWeight = null;
 
-	public function __construct(private readonly Number $size) {}
+	public function __construct(private Number $size) {}
 
 	public function addItem(LootItem $item): LootPool {
 		$this->itemPool[] = $item;
@@ -27,6 +27,9 @@ class LootPool {
 		return new LootPool($size);
 	}
 
+	/**
+	 * @return Item[]
+	 */
 	public function generateItems(Random $random): array {
 		$size = $this->size->getNumber();
 		$fullWeight = $this->getFullWeight();
@@ -56,6 +59,6 @@ class LootPool {
 		foreach ($this->itemPool as $item) {
 			$weightSum += $item->getWeight();
 		}
-		return $this->cachedFullWeight = $weightSum;
+		return $this->cachedFullWeight = (int) ceil($weightSum);
 	}
 }

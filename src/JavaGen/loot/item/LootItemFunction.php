@@ -10,5 +10,8 @@ abstract class LootItemFunction {
 
 	abstract public function applyOn(LootItem $item, Random $random): void;
 
-	abstract public static function fromJson(array $data): static;
+	/**
+	 * @phpstan-param array<mixed> $data
+	 */
+	abstract public static function fromJson(array $data): self;
 }

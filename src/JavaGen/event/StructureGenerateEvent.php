@@ -10,7 +10,7 @@ use pocketmine\world\World;
 
 class StructureGenerateEvent extends WorldEvent {
 
-	public function __construct(World $world, private readonly Structure $structure) {
+	public function __construct(World $world, private Structure $structure) {
 		parent::__construct($world);
 	}
 

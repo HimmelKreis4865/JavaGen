@@ -19,7 +19,10 @@ use const DIRECTORY_SEPARATOR;
 final class ChunkDataStorage {
 	use SingletonTrait;
 
-	/** @var string[][][] */
+	/**
+	 * @var string[][][] $structures
+	 * @phpstan-var array<string, array<string, array<int, string>>> $structures
+	 */
 	private array $structures = [];
 
 	public function __construct() {
@@ -47,6 +50,9 @@ final class ChunkDataStorage {
 		}
 	}
 
+	/**
+	 * @return Structure[]
+	 */
 	public function getStructuresInDimension(Dimension $dimension): array {
 		$structures = [];
 		foreach	($this->structures[$dimension->value] as $type => $boundingBoxes) {

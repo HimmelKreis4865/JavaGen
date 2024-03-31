@@ -41,6 +41,9 @@ final class StructureManager {
 		$this->registeredStructures[$structure->getType()->getDimension()->value][] = $structure;
 	}
 
+	/**
+	 * @return Structure[]
+	 */
 	public function getStructuresAt(Position $position): array {
 		$dimension = GeneratorNames::toDimension($position->getWorld());
 
@@ -54,6 +57,9 @@ final class StructureManager {
 		return $structures;
 	}
 
+	/**
+	 * @return Structure[]
+	 */
 	public function getStructuresInChunk(World $world, int $chunkX, int $chunkZ): array {
 		$aabb = new AxisAlignedBB($chunkX << 4, $world->getMinY(), $chunkZ << 4, ($chunkX << 4) + 15, $world->getMaxY(), ($chunkZ << 4) + 15);
 		$dimension = GeneratorNames::toDimension($world);

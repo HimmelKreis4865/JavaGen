@@ -16,9 +16,11 @@ use JavaGen\loot\item\SpecificEnchantFunction;
 use pocketmine\item\StringToItemParser;
 use pocketmine\item\VanillaItems;
 use pocketmine\utils\SingletonTrait;
+use RuntimeException;
 use function array_diff;
 use function basename;
 use function file_get_contents;
+use function is_array;
 use function is_dir;
 use function json_decode;
 use function scandir;
@@ -48,10 +50,6 @@ final class LootTableRegistry {
 		$this->lootTables[$this->parseName($name)] = $lootTable;
 	}
 
-	public function getLootTables(): array {
-		return $this->lootTables;
-	}
-
 	private function parseName(string $name): string {
 		return str_replace("_", "", strtolower($name));
 	}
@@ -64,10 +62,16 @@ final class LootTableRegistry {
 			}
 			if (!str_ends_with($file, ".json")) continue;
 			$json = json_decode(file_get_contents($folder . $file), true);
+			if (!is_array($json)) {
+				throw new RuntimeException("Failed to decode loot table data for " . $file);
+			}
 			$this->loadTable($prefix . basename($file, ".json"), $json);
 		}
 	}
 
+	/**
+	 * @phpstan-param array<mixed> $jsonData
+  	 */
 	private function loadTable(string $name, array $jsonData): void {
 		$pools = [];
 		foreach ($jsonData["pools"] as $poolData) {

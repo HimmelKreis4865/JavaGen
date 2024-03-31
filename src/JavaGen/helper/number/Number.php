@@ -21,7 +21,10 @@ abstract class Number {
 		return new RandomNumber($min, $max);
 	}
 
-	public static function fromJson($json): Number {
+	/**
+	 * @param array<string, int|float>|int|float $json
+	 */
+	public static function fromJson(array|int|float $json): Number {
 		return is_array($json) ? self::random($json["min"], $json["max"]) : self::exact($json);
 	}
 }

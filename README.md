@@ -39,7 +39,7 @@ You need
 ## Known issues
 - Missing blocks and items in PocketMine-MP will NOT be generated in the world
 - Weird sky color in nether and end dimension
-- Java server must be on the same machine as the pocketmine server
+- Java server must be on the same machine as the pocketmine server, port cannot be changed yet
 
 ## Any problems or ideas?
 Feel free to open an issue on github

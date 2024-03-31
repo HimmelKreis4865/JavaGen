@@ -11,7 +11,7 @@ use pocketmine\world\format\io\GlobalItemDataHandlers;
 
 class SetDataFunction extends LootItemFunction {
 
-	public function __construct(private readonly int $data) {
+	public function __construct(private int $data) {
 	}
 
 	public function applyOn(LootItem $item, Random $random): void {
@@ -23,7 +23,11 @@ class SetDataFunction extends LootItemFunction {
 		}
 	}
 
-	public static function fromJson(array $data): static {
+
+	/**
+	 * @phpstan-param array<mixed> $data
+	 */
+	public static function fromJson(array $data): SetDataFunction {
 		return new SetDataFunction((int) $data["data"]);
 	}
 }
