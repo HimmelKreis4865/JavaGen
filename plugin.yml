@@ -1,0 +1,11 @@
+name: JavaGen
+author: HimmelKreis4865
+version: 1.0.0
+api: 5.0.0
+main: JavaGen\JavaGen
+load: STARTUP
+permissions:
+  world.command:
+    default: op
+  locate.command:
+    default: op

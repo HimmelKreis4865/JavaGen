@@ -1,0 +1,7 @@
+{
+  "require": {
+    "friendsofphp/php-cs-fixer": "*",
+    "phpstan/phpstan": "*",
+    "pocketmine/pocketmine-mp": "^5.13"
+  }
+}
