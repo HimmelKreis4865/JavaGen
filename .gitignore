@@ -1,2 +1,6 @@
+.git/
 .idea/
 vendor/
+.gitattributes
+.php-cs-fixer.cache
+.composer.lock
