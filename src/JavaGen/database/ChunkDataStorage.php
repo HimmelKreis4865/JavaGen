@@ -26,7 +26,7 @@ final class ChunkDataStorage {
 		foreach (Dimension::cases() as $dimension) {
 			$config = new Config(self::structurePath($dimension), Config::JSON);
 
-			$this->structures[$dimension->value] = $config->getAll(true);
+			$this->structures[$dimension->value] = $config->getAll();
 		}
 	}
 

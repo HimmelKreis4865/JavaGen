@@ -24,7 +24,7 @@ final class StructureManager {
 	public function __construct() {
 		foreach (Dimension::cases() as $dimension) {
 			foreach (ChunkDataStorage::getInstance()->getStructuresInDimension($dimension) as $structure) {
-				$this->registeredStructures[$dimension->value] = $structure;
+				$this->registeredStructures[$dimension->value][] = $structure;
 			}
 		}
 	}

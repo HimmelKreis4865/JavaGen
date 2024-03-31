@@ -27,6 +27,7 @@ final class BiomeIdentifierRegistry {
 		$this->registerMapping("bamboo_jungle", BiomeIds::BAMBOO_JUNGLE);
 		$this->registerMapping("basalt_deltas", BiomeIds::BASALT_DELTAS);
 		$this->registerMapping("beach", BiomeIds::BEACH);
+		$this->registerMapping("birch_forest", BiomeIds::BIRCH_FOREST);
 		$this->registerMapping("cherry_grove", BiomeIds::CHERRY_GROVE);
 		$this->registerMapping("cold_ocean", BiomeIds::COLD_OCEAN);
 		$this->registerMapping("crimson_forest", BiomeIds::CRIMSON_FOREST);
