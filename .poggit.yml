@@ -1,0 +1,8 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/HimmelKreis4865/JavaGen
+build-by-default: true
+branches:
+- main
+projects:
+  JavaGen:
+    path: ""
+...
