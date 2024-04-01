@@ -13,14 +13,14 @@ class SetDamageFunction extends LootItemFunction {
 	public function __construct(private Number $damage) {
 	}
 
-	public function applyOn(LootItem $item, Random $random): void {
-		if (!$item instanceof Durable) return;
+	public function applyOn(LootItem $lootItem, Random $random): void {
+		if (!$lootItem instanceof Durable) return;
 
 		$num = $this->damage->getNumber();
 		if ($num > 1) {
-			$item->setDamage((int) $num);
+			$lootItem->setDamage((int) $num);
 		} else {
-			$item->setDamage($num * $item->getMaxDurability());
+			$lootItem->setDamage($num * $lootItem->getMaxDurability());
 		}
 	}
 

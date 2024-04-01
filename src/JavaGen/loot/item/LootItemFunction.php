@@ -8,7 +8,7 @@ use pocketmine\utils\Random;
 
 abstract class LootItemFunction {
 
-	abstract public function applyOn(LootItem $item, Random $random): void;
+	abstract public function applyOn(LootItem $lootItem, Random $random): void;
 
 	/**
 	 * @phpstan-param array<mixed> $data

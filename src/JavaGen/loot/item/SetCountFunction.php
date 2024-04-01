@@ -13,9 +13,9 @@ class SetCountFunction extends LootItemFunction {
 	public function __construct(private Number $count) {
 	}
 
-	public function applyOn(LootItem $item, Random $random): void {
+	public function applyOn(LootItem $lootItem, Random $random): void {
 		$num = $this->count->getNumber();
-		$item->item->setCount(min($item->item->getMaxStackSize(), (int) $num));
+		$lootItem->item->setCount(min($lootItem->item->getMaxStackSize(), (int) $num));
 	}
 
 

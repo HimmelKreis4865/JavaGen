@@ -14,12 +14,12 @@ class SetDataFunction extends LootItemFunction {
 	public function __construct(private int $data) {
 	}
 
-	public function applyOn(LootItem $item, Random $random): void {
-		$data = GlobalItemDataHandlers::getSerializer()->serializeType($item->item);
+	public function applyOn(LootItem $lootItem, Random $random): void {
+		$data = GlobalItemDataHandlers::getSerializer()->serializeType($lootItem->item);
 
 		$resultingName = LegacyItemMetaIdMap::getInstance()->getMeta($data->getName(), $this->data);
 		if ($resultingItem = StringToItemParser::getInstance()->parse($resultingName)) {
-			$item->item = $resultingItem;
+			$lootItem->item = $resultingItem;
 		}
 	}
 

@@ -54,23 +54,25 @@ class ProcessGenerationDataTask extends AsyncTask {
 					return;
 				}
 				$chunk = $world->getChunk($chunkX, $chunkZ);
-				foreach ($result["tiles"] ?? [] as $tile) {
-					$javaTile = new JavaTile($tile);
-					$mapping = JavaTileMappings::getInstance()->findMapping($javaTile->getId());
-					if ($mapping !== null) {
-						$mapping($javaTile, $world, $chunk);
+				if ($chunk !== null) {
+					foreach ($result["tiles"] ?? [] as $tile) {
+						$javaTile = new JavaTile($tile);
+						$mapping = JavaTileMappings::getInstance()->findMapping($javaTile->getId());
+						if ($mapping !== null) {
+							$mapping($javaTile, $world, $chunk);
+						}
 					}
-				}
-				foreach ($result["structures"] ?? [] as $structureData) {
-					$structure = new Structure(StructureType::from($structureData["name"]), Structure::parseBoundingBox($structureData["boundingBox"]));
-					StructureManager::getInstance()->putStructure($structure);
+					foreach ($result["structures"] ?? [] as $structureData) {
+						$structure = new Structure(StructureType::from($structureData["name"]), Structure::parseBoundingBox($structureData["boundingBox"]));
+						StructureManager::getInstance()->putStructure($structure);
 
-					if (StructureGenerateEvent::hasHandlers()) {
-						(new StructureGenerateEvent($world, $structure))->call();
+						if (StructureGenerateEvent::hasHandlers()) {
+							(new StructureGenerateEvent($world, $structure))->call();
+						}
 					}
-				}
-				if ($chunk?->isTerrainDirty()) {
-					$world->setChunk($chunkX, $chunkZ, $chunk);
+					if ($chunk?->isTerrainDirty()) {
+						$world->setChunk($chunkX, $chunkZ, $chunk);
+					}
 				}
 			}
 		}

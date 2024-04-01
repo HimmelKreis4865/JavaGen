@@ -9,6 +9,8 @@ use pocketmine\item\enchantment\AvailableEnchantmentRegistry;
 use pocketmine\item\enchantment\EnchantingHelper;
 use pocketmine\item\enchantment\EnchantingOption;
 use pocketmine\item\enchantment\EnchantmentInstance;
+use pocketmine\item\ItemTypeIds;
+use pocketmine\item\VanillaItems;
 use pocketmine\utils\Random;
 use ReflectionClass;
 use function array_rand;
@@ -19,15 +21,18 @@ class EnchantItemFunction extends LootItemFunction {
 
 	public function __construct(private ?Number $levels = null) {}
 
-	public function applyOn(LootItem $item, Random $random): void {
-		$item = $item->item;
+	public function applyOn(LootItem $lootItem, Random $random): void {
+		$item = $lootItem->item;
 
+		if ($item->getTypeId() === ItemTypeIds::BOOK) {
+			$item = $lootItem->item = VanillaItems::ENCHANTED_BOOK();
+		}
 		if ($this->levels === null) {
 			$enchants = AvailableEnchantmentRegistry::getInstance()->getAllEnchantmentsForItem($item);
 			if (count($enchants) > 0) {
 				$enchant = $enchants[array_rand($enchants)];
 
-				$item->addEnchantment(new EnchantmentInstance($enchant, mt_rand(1, $enchant->getMaxLevel())));
+				$item->addEnchantment(new EnchantmentInstance($enchant, $random->nextRange(1, $enchant->getMaxLevel())));
 			}
 		} else {
 			$method = (new ReflectionClass(EnchantingHelper::class))->getMethod("createOption");

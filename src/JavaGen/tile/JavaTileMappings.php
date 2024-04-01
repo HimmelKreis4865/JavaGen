@@ -41,7 +41,7 @@ final class JavaTileMappings {
 
 			if (($lootTable = LootTableRegistry::getInstance()->getTableByName($name)) !== null) {
 				$tileChest = new Chest($world, $tile->getPosition());
-				$tileChest->getInventory()->setContents($lootTable->placeItemsInChestGrid(new Random($tile->getAdditionalData()["LootTableSeed"] ?? mt_rand())));
+				$tileChest->getInventory()->setContents($lootTable->placeItemsInChestGrid(new Random(mt_rand())));
 				$chunk->addTile($tileChest);
 				$chunk->setTerrainDirty();
 			} else {
