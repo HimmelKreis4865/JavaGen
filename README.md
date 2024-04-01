@@ -11,7 +11,10 @@ You need
 - Java 17
 - a java server, preferably a spigot server (everything was tested on a [Paperspigot](https://papermc.io/downloads/paper) server, version 1.20.4))
 - [ChunkSender](https://github.com/HimmelKreis4865/ChunkSender/releases/latest) the Java-Plugin, required to use the generator
-
+- There are 3 new generators you can use to generate the vanilla world:
+    - overworld: `java_overworld`
+    - nether: `java_nether`
+    - end: `java_end`
 
 ## Ingame footage
 - ### A beautiful landscape in the jungle
