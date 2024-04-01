@@ -7,7 +7,7 @@ The speed of the generator may be influenced by the available hardware power.
 
 ## Installation
 You need
-- [PocketMine-MP API-5](https://github.com/pmmp/PocketMine-MP/releases/lastest)
+- [PocketMine-MP API-5](https://github.com/pmmp/PocketMine-MP/releases/latest)
 - Java 17
 - a java server, preferably a spigot server (everything was tested on a [Paperspigot](https://papermc.io/downloads/paper) server, version 1.20.4))
 - [ChunkSender](https://github.com/HimmelKreis4865/ChunkSender/releases/latest) the Java-Plugin, required to use the generator
