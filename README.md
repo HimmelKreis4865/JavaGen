@@ -1,4 +1,4 @@
-# JavaGen
+# <img src="icon.png" alt="icon" width="28"/> ‎ ‎  JavaGen
 JavaGen is a PocketMine-MP plugin that provides a fast way to generate the Minecraft **Vanilla terrain** (all dimensions) based on a Java Server
 
 Depending on the biome height, the generation per chunk took from 0.03 to 0.1 seconds during the tests.
