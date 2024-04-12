@@ -37,7 +37,7 @@ class LootPool {
 		$items = [];
 
 		for ($i = 0; $i < $size; $i++) {
-			while (true) {
+			for ($j = 0; $j < 100; $j++) {
 				foreach ($this->itemPool as $item) {
 					$item = clone $item;
 					$chance = ($item->getWeight() / $fullWeight) * 10000;

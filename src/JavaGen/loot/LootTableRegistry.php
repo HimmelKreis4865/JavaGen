@@ -95,7 +95,9 @@ final class LootTableRegistry {
 				}
 				$pool->addItem($lootItem);
 			}
-			$pools[] = $pool;
+			if ($pool->getFullWeight() > 0) {
+				$pools[] = $pool;
+			}
 		}
 
 		$this->registerLootTable($name, new LootTable(...$pools));

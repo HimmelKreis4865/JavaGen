@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace JavaGen\generator;
 
-use InvalidArgumentException;
+use GlobalLogger;
 use JavaGen\helper\biome\BiomePalette;
 use JavaGen\helper\block\BlockPalette;
-use JavaGen\helper\block\JavaToBedrockBlockData;
 use JavaGen\helper\Dimension;
 use JavaGen\stream\JavaRequests;
 use JavaGen\structure\StructureType;
 use pocketmine\block\Block;
 use pocketmine\data\bedrock\BiomeIds;
+use pocketmine\scheduler\AsyncTask;
 use pocketmine\scheduler\AsyncWorker;
 use pocketmine\thread\Thread;
 use pocketmine\utils\BinaryStream;
@@ -27,6 +27,7 @@ use function json_decode;
 use function json_encode;
 use function microtime;
 use function str_replace;
+use function var_dump;
 
 abstract class BaseJavaGenerator extends Generator {
 
@@ -40,7 +41,6 @@ abstract class BaseJavaGenerator extends Generator {
 
 	public function __construct(int $seed, string $preset) {
 		parent::__construct($seed, $preset);
-		JavaToBedrockBlockData::$mappingsFile = $preset . "mappings.json";
 	}
 
 	public function generateChunk(ChunkManager $world, int $chunkX, int $chunkZ): void {
@@ -48,7 +48,6 @@ abstract class BaseJavaGenerator extends Generator {
 		if ($chunk === null) {
 			return;
 		}
-
 		$stream = JavaRequests::requestChunk($this->getDimension(), $chunkX, $chunkZ);
 
 		$minIndex = (static::MIN_Y >> 4);
@@ -77,7 +76,8 @@ abstract class BaseJavaGenerator extends Generator {
 			$name = str_replace("minecraft:", "", $stream->get($stream->getUnsignedVarInt()));
 			$structureType = StructureType::tryFrom($name);
 			if ($structureType === null) {
-				throw new InvalidArgumentException("Structure type for name " . $name . " not found");
+				GlobalLogger::get()->debug("Structure type for name " . $name . " not found");
+				continue;
 			}
 			$saveData["structures"][] = [
 				"name" => $name,

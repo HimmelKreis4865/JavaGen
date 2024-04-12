@@ -29,8 +29,6 @@ use function json_decode;
 final class JavaToBedrockBlockData {
 	use SingletonTrait;
 
-	public static string $mappingsFile;
-
 	/** @var Block[] $mappings */
 	private array $mappings;
 

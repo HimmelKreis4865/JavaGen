@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace JavaGen\tile;
 
 use Closure;
-use InvalidArgumentException;
+use JavaGen\JavaGen;
 use JavaGen\loot\LootTableRegistry;
 use pocketmine\block\tile\Bed;
 use pocketmine\block\tile\BrewingStand;
@@ -45,7 +45,7 @@ final class JavaTileMappings {
 				$chunk->addTile($tileChest);
 				$chunk->setTerrainDirty();
 			} else {
-				throw new InvalidArgumentException("LootTable " . $name . " does not exist!");
+				JavaGen::getInstance()->getLogger()->debug("LootTable " . $name . " does not exist!");
 			}
 		});
 		$this->registerMapping(BlockTypeNames::ENDER_CHEST, function (JavaTile $tile, World $world, Chunk $chunk): void {

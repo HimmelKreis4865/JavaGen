@@ -31,6 +31,7 @@ final class BiomeIdentifierRegistry {
 		$this->registerMapping("cherry_grove", BiomeIds::CHERRY_GROVE);
 		$this->registerMapping("cold_ocean", BiomeIds::COLD_OCEAN);
 		$this->registerMapping("crimson_forest", BiomeIds::CRIMSON_FOREST);
+		$this->registerMapping("custom", BiomeIds::PLAINS);
 		$this->registerMapping("dark_forest", BiomeIds::DEEP_DARK);
 		$this->registerMapping("deep_cold_ocean", BiomeIds::DEEP_COLD_OCEAN);
 		$this->registerMapping("deep_dark", BiomeIds::DEEP_DARK);
