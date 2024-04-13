@@ -1,7 +1,9 @@
 ---
+version: 1
 commands:
   locate:
     ingame: "You can only run this command ingame."
+    usage: "Usage:\n/locate list <biome|structure>\n/locate biome <biome>\n/locate structure <structure>"
     invalid:
       category: "Cannot locate objects of type %0, possible values: structure, biome"
       biome: "Biome %0 could not be found"
@@ -12,4 +14,9 @@ commands:
     nothing:
       biome: "§cCould not find a biome of type %0 within a reasonable distance"
       structure: "§cCould not find a structure of type %0 within a reasonable distance"
+    list:
+      biome: "Available biomes: "
+      structure: "Available structures: "
+      element: "§7%0§r"
+      separator: ", "
 ...

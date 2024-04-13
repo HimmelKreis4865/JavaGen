@@ -23,7 +23,6 @@ class SetDataFunction extends LootItemFunction {
 		}
 	}
 
-
 	/**
 	 * @phpstan-param array<mixed> $data
 	 */

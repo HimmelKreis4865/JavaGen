@@ -12,7 +12,6 @@ use JavaGen\stream\JavaRequests;
 use JavaGen\structure\StructureType;
 use pocketmine\block\Block;
 use pocketmine\data\bedrock\BiomeIds;
-use pocketmine\scheduler\AsyncTask;
 use pocketmine\scheduler\AsyncWorker;
 use pocketmine\thread\Thread;
 use pocketmine\utils\BinaryStream;
@@ -23,11 +22,10 @@ use pocketmine\world\generator\Generator;
 use RuntimeException;
 use function array_fill;
 use function igbinary_serialize;
+use function is_string;
 use function json_decode;
 use function json_encode;
-use function microtime;
 use function str_replace;
-use function var_dump;
 
 abstract class BaseJavaGenerator extends Generator {
 
@@ -90,7 +88,6 @@ abstract class BaseJavaGenerator extends Generator {
 	}
 
 	/**
-	 * @param array $data
 	 * @phpstan-param array<string, scalar|array> $data
 	 */
 	public function mergeWorkerData(array $data): void {

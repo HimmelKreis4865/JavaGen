@@ -71,7 +71,7 @@ final class LootTableRegistry {
 
 	/**
 	 * @phpstan-param array<mixed> $jsonData
-  	 */
+	 */
 	private function loadTable(string $name, array $jsonData): void {
 		$pools = [];
 		foreach ($jsonData["pools"] as $poolData) {

@@ -24,7 +24,6 @@ class SetDamageFunction extends LootItemFunction {
 		}
 	}
 
-
 	/**
 	 * @phpstan-param array<mixed> $data
 	 */

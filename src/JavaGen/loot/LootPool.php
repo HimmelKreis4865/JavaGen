@@ -8,6 +8,7 @@ use JavaGen\helper\number\Number;
 use JavaGen\loot\item\LootItem;
 use pocketmine\item\Item;
 use pocketmine\utils\Random;
+use function ceil;
 
 class LootPool {
 

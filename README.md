@@ -42,5 +42,15 @@ You need
 - Weird sky color in nether and end dimension
 - Java server must be on the same machine as the pocketmine server, port cannot be changed yet
 
+## Commands
+### Locate
+#### Usages:
+ - `/locate list <structure|biome>`   Lists all locatable structures or biomes
+ - `/locate structure <structure>`   Locates the nearest structure of a specific type, for a list of all available structures, see `/locate list`
+ - `/locate biome <biome>`   Locates the nearest biome of a specific type, for a list of all available biomes, see `/locate list`
+
+#### Permission: 
+`locate.command`
+
 ## Any problems or ideas?
 Feel free to open an issue on github

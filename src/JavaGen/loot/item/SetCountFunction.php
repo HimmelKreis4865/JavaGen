@@ -18,7 +18,6 @@ class SetCountFunction extends LootItemFunction {
 		$lootItem->item->setCount(min($lootItem->item->getMaxStackSize(), (int) $num));
 	}
 
-
 	/**
 	 * @phpstan-param array<mixed> $data
 	 */

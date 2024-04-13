@@ -6,7 +6,6 @@ namespace JavaGen\helper\block;
 
 use Closure;
 use pocketmine\block\Block;
-use pocketmine\block\Chest;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\data\bedrock\block\BlockTypeNames;
 use pocketmine\utils\SingletonTrait;

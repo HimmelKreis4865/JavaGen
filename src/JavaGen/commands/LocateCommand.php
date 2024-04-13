@@ -12,7 +12,6 @@ use JavaGen\structure\StructureType;
 use JavaGen\tasks\LocateObjectTask;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\utils\InvalidCommandSyntaxException;
 use pocketmine\math\Vector3;
 use pocketmine\player\Player;
 use pocketmine\promise\Promise;
@@ -36,7 +35,8 @@ final class LocateCommand extends Command {
 		parent::__construct(
 			"locate",
 			"Locates the nearest structure or biome",
-			"/locate biome <" . implode("|", BiomeIdentifierRegistry::getInstance()->getBiomeNames()) . "> " .
+			"/locate list <structure|biome> " .
+			"OR /locate biome <" . implode("|", BiomeIdentifierRegistry::getInstance()->getBiomeNames()) . "> " .
 			"OR /locate structure <" . implode("|", array_map(fn(StructureType $type) => $type->value, StructureType::cases())) . ">");
 		$this->setPermission("locate.command");
 	}
@@ -47,8 +47,8 @@ final class LocateCommand extends Command {
 			return;
 		}
 		if (!isset($args[1])) {
-			// is this better than sending a usage message?
-			throw new InvalidCommandSyntaxException();
+			$sender->sendMessage(Messages::getInstance()->get(MessageKey::COMMAND_LOCATE_USAGE));
+			return;
 		}
 		switch ($args[0]) {
 			case "biome":
@@ -79,8 +79,21 @@ final class LocateCommand extends Command {
 					$sender->sendMessage(Messages::getInstance()->get(MessageKey::COMMAND_LOCATE_NOTHING_STRUCTURE, $targetStructure));
 				});
 				break;
+			case "list":
+				$type = $args[1];
+				if ($type !== "structure" and $type !== "biome") {
+					$sender->sendMessage(Messages::getInstance()->get(MessageKey::COMMAND_LOCATE_INVALID_CATEGORY, $type));
+					return;
+				}
+				$array = ($type === "structure"
+					? array_map(fn(string $name) => Messages::getInstance()->get(MessageKey::COMMAND_LOCATE_LIST_ELEMENT, $name), BiomeIdentifierRegistry::getInstance()->getBiomeNames())
+					: array_map(fn(StructureType $type) => Messages::getInstance()->get(MessageKey::COMMAND_LOCATE_LIST_ELEMENT, $type->value), StructureType::cases())
+				);
+				$elements = implode(Messages::getInstance()->get(MessageKey::COMMAND_LOCATE_LIST_SEPARATOR), $array);
+				$sender->sendMessage(Messages::getInstance()->get(($type === "structure" ? MessageKey::COMMAND_LOCATE_LIST_STRUCTURE : MessageKey::COMMAND_LOCATE_LIST_BIOME)) . $elements);
+				break;
 			default:
-				$sender->sendMessage(Messages::getInstance()->get(MessageKey::COMMAND_LOCATE_INVALID_CATEGORY, $args[0]));
+				$sender->sendMessage(Messages::getInstance()->get(MessageKey::COMMAND_LOCATE_USAGE));
 				break;
 		}
 	}

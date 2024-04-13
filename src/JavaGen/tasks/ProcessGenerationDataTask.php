@@ -63,14 +63,17 @@ class ProcessGenerationDataTask extends AsyncTask {
 						}
 					}
 					foreach ($result["structures"] ?? [] as $structureData) {
-						$structure = new Structure(StructureType::from($structureData["name"]), Structure::parseBoundingBox($structureData["boundingBox"]));
-						StructureManager::getInstance()->putStructure($structure);
+						$boundingBox = Structure::parseBoundingBox($structureData["boundingBox"]);
+						if ($boundingBox !== null) {
+							$structure = new Structure(StructureType::from($structureData["name"]), $boundingBox);
+							StructureManager::getInstance()->putStructure($structure);
 
-						if (StructureGenerateEvent::hasHandlers()) {
-							(new StructureGenerateEvent($world, $structure))->call();
+							if (StructureGenerateEvent::hasHandlers()) {
+								(new StructureGenerateEvent($world, $structure))->call();
+							}
 						}
 					}
-					if ($chunk?->isTerrainDirty()) {
+					if ($chunk->isTerrainDirty()) {
 						$world->setChunk($chunkX, $chunkZ, $chunk);
 					}
 				}

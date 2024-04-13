@@ -15,7 +15,6 @@ use pocketmine\utils\Random;
 use ReflectionClass;
 use function array_rand;
 use function count;
-use function mt_rand;
 
 class EnchantItemFunction extends LootItemFunction {
 

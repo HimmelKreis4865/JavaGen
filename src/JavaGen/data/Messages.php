@@ -24,6 +24,10 @@ final class Messages {
 		$this->messageKeys = new Config(JavaGen::getInstance()->getDataFolder() . "messages.yml", Config::YAML);
 	}
 
+	public function getVersion(): int {
+		return $this->messageKeys->get("version", 0);
+	}
+
 	public function get(MessageKey $key, string|int|float ...$replaces): string {
 		$message = $this->messageKeyCache[$key->value] ??= $this->messageKeys->getNested($key->value) ?? "Invalid message key " . $key->value . " for plugin JavaGen.";
 		foreach ($replaces as $i => $replace) {
