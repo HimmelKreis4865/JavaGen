@@ -7,7 +7,7 @@ The speed of the generator may be influenced by the available hardware power, an
 You need
 - [PocketMine-MP API-5](https://github.com/pmmp/PocketMine-MP/releases/latest)
 - Java 17
-- a java server, preferably a spigot server (everything was tested on a [Paperspigot](https://papermc.io/downloads/paper) server, version 1.20.4))
+- a [PaperMC](https://papermc.io/downloads/paper) server, tested on version 1.20.4) (NOW REQUIRED since 1.2.0!)
 - [ChunkSender](https://github.com/HimmelKreis4865/ChunkSender/releases/latest) the Java-Plugin, required to use the generator
 - There are 3 new generators you can use to generate the vanilla world:
     - overworld: `java_overworld`
