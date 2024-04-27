@@ -11,13 +11,17 @@ use pocketmine\utils\BinaryStream;
 use pocketmine\utils\Internet;
 use pocketmine\world\Position;
 use RuntimeException;
+use function getenv;
 use function is_array;
 use function json_decode;
+use function str_starts_with;
 
 final class JavaRequests {
 
 	public static function requestChunk(Dimension $dimension, int $chunkX, int $chunkZ): BinaryStream {
-		$fullResponse = self::request("http://localhost:8000/chunkRequest?chunkX=$chunkX&chunkZ=$chunkZ&dimension=" . $dimension->value);
+		$ip = getenv("JAVA_SERVER_IP") ?: "127.0.0.1:8000";
+		$prefix = str_starts_with($ip, "http") ? "" : "http://";
+		$fullResponse = self::request("$prefix$ip/chunkRequest?chunkX=$chunkX&chunkZ=$chunkZ&dimension=" . $dimension->value);
 		return new BinaryStream($fullResponse);
 	}
 
