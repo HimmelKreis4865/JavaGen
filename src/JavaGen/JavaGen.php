@@ -15,12 +15,15 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use pocketmine\utils\SingletonTrait;
 use pocketmine\world\generator\GeneratorManager;
+use function putenv;
 use function rename;
 
 final class JavaGen extends PluginBase {
 	use SingletonTrait;
 
 	protected function onLoad(): void {
+		$this->saveDefaultConfig();
+		putenv("JAVA_SERVER_IP=" . $this->getConfig()->get("java-server", "127.0.0.1:8000"));
 		self::$instance = $this;
 		$this->validateConfig();
 		$this->testConnection();
